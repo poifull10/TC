@@ -3,6 +3,7 @@ add_executable(
   main.cpp
   test_vec.cpp
   test_pinhole.cpp
+  test_image.cpp
 )
 
 target_link_libraries(TCalibTest gtest TCalib::TCalib)
