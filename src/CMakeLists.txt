@@ -32,7 +32,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC ${OpenCV_LIBS} yaml-cpp Boost::file
 
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}
-    EXPORT tsfm-export
+    EXPORT tcalib-export
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )

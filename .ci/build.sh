@@ -24,7 +24,7 @@ set -u
 git submodule update --init --recursive
 
 # check format
-python3 /build/run-clang-format/run-clang-format.py -r src render tests
+python3 /build/run-clang-format/run-clang-format.py -r src tests
 
 # build
 build_space=build/$build_type-$compiler_type

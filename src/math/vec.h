@@ -15,5 +15,6 @@ struct Vec {
     }
   }
   T& operator[](std::size_t i) { return data[i]; }
+  T operator[](std::size_t i) const { return data[i]; }
 };
 }  // namespace tcalib
