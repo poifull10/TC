@@ -12,7 +12,6 @@ usage_exit() {
 while getopts ab:c:th OPT
 do
   case $OPT in
-    a)  analyzer="-DCMAKE_CXX_FLAGS=\"-fanalyzer\"" ;;
     b)  build_type=$OPTARG ;;
     c)  compiler_type=$OPTARG ;;
     h)  usage_exit ;;
@@ -28,7 +27,7 @@ git submodule update --init --recursive
 python3 /build/run-clang-format/run-clang-format.py -r src tests
 
 # build
-build_space=""
+build_space=build/$build_type-$compiler_type
 mkdir -p $build_space && cd $build_space
 
 c_compiler=""
@@ -44,5 +43,5 @@ else
   exit 1
 fi
 
-cmake ../.. -DCMAKE_BUILD_TYPE=$build_type -DCMAKE_C_COMPILER=$c_compiler -DCMAKE_CXX_COMPILER=$cxx_compiler
+cmake ../.. -DCMAKE_BUILD_TYPE=$build_type -DCMAKE_C_COMPILER=$c_compiler -DCMAKE_CXX_COMPILER=$cxx_compiler -GNinja
 ninja
