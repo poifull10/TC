@@ -45,3 +45,4 @@ fi
 
 cmake ../.. -DCMAKE_BUILD_TYPE=$build_type -DCMAKE_C_COMPILER=$c_compiler -DCMAKE_CXX_COMPILER=$cxx_compiler -GNinja
 ninja
+./tests/TCalibTest
