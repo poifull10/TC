@@ -15,11 +15,7 @@ FROM base AS builder-opencv
     -DCMAKE_BUILD_TYPE=Release \
     -DOPENCV_ENABLE_NONFREE=ON \
     -DOPENCV_EXTRA_MODULES_PATH=/build/opencv_contrib/modules
-  RUN ninja
   RUN ninja install
-
-FROM base AS standard
-  COPY --from=builder-opencv /usr/local/ /usr/local
 
 FROM base AS builder-gcc10
   ARG GMP=gmp-6.2.0
@@ -53,9 +49,10 @@ FROM base AS builder-gcc10
   RUN git clone --branch releases/gcc-10.2.0 --single-branch --depth=1 https://github.com/gcc-mirror/gcc.git
   WORKDIR /build/gcc
   RUN ./configure --enable-languages=c,c++ --prefix=/usr/local --disable-bootstrap
-  RUN make
   RUN make install
-  WORKDIR /build/gcc
+
+FROM base AS standard
+  COPY --from=builder-opencv /usr/local/ /usr/local
 
 FROM standard AS ci
   RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
