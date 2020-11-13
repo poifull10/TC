@@ -49,6 +49,7 @@ FROM base AS builder-gcc10
   RUN git clone --branch releases/gcc-10.2.0 --single-branch --depth=1 https://github.com/gcc-mirror/gcc.git
   WORKDIR /build/gcc
   RUN ./configure --enable-languages=c,c++ --prefix=/usr/local --disable-bootstrap
+  RUN make
   RUN make install
 
 FROM base AS standard
