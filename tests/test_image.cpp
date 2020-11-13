@@ -10,7 +10,6 @@ TEST(GrayImage, Construct) {
 
 TEST(GrayImage, Assign) {
   tcalib::GrayImage image(9, 11);
-
   image(1, 1, 3);
   ASSERT_EQ(image(1, 1), 3);
 }

@@ -1,6 +1,7 @@
 add_library(
   ${PROJECT_NAME}
   tcalib.cpp
+  marker_detector/detector.cpp
 )
 
 add_library(TCalib::TCalib ALIAS ${PROJECT_NAME})

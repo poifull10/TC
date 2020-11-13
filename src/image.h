@@ -10,7 +10,7 @@ class GrayImage {
   GrayImage(const GrayImage&) = delete;
   GrayImage& operator=(const GrayImage&) = delete;
 
-  std::uint8_t operator()(std::size_t x, std::size_t y) {
+  std::uint8_t operator()(std::size_t x, std::size_t y) const {
     return const_view(data_)(x, y);
   }
 
@@ -23,6 +23,12 @@ class GrayImage {
 
  private:
   boost::gil::gray8_image_t data_;
+};
+
+template <typename Image>
+struct TaggedImage {
+  std::size_t id;
+  Image image;
 };
 
 }  // namespace tcalib
