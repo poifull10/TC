@@ -24,7 +24,7 @@ set -u
 git submodule update --init --recursive
 
 # check format
-python3 /build/run-clang-format/run-clang-format.py -r src tests
+python3 /build/run-clang-format/run-clang-format.py -r src render tests
 
 # build
 build_space=build/$build_type-$compiler_type
@@ -45,3 +45,4 @@ fi
 
 cmake ../.. -DCMAKE_BUILD_TYPE=$build_type -DCMAKE_C_COMPILER=$c_compiler -DCMAKE_CXX_COMPILER=$cxx_compiler -GNinja
 ninja
+./tests/TCalibTest
