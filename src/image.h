@@ -14,6 +14,10 @@ class GrayImage {
     return const_view(data_)(x, y);
   }
 
+  void operator()(std::size_t x, std::size_t y, std::uint8_t value) {
+    view(data_)(x, y) = value;
+  }
+
   std::size_t width() const { return const_view(data_).width(); }
   std::size_t height() const { return const_view(data_).height(); }
 
