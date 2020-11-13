@@ -1,0 +1,13 @@
+name: build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: clang-release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: clang-release
+        uses: ./.github/actions/tcalib
+        with:
+          run-command: ".ci/build_clang_release.sh"

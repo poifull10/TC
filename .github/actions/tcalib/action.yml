@@ -1,0 +1,13 @@
+name: docker_run
+description: "docker image for tcalib ci"
+author: poifull10
+
+inputs:
+  run-command:
+    description: "Command to run"
+    required: true
+runs:
+  using: "Docker"
+  image: poifull10/tcalib-ci
+  args:
+    - ${{inputs.run-command}}

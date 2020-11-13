@@ -1,0 +1,13 @@
+name: build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: gcc-release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: gcc-release
+        uses: ./.github/actions/tcalib
+        with:
+          run-command: ".ci/build_gcc_release.sh"
