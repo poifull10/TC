@@ -9,7 +9,7 @@
 namespace tcalib {
 class Matrix {
  public:
-  Matrix(std::size_t col, std::size_t row) : mat_(col, row) {}
+  Matrix(std::size_t col, std::size_t row) : mat_(Eigen::MatrixXf::Zero(row, col)) {}
   ~Matrix() = default;
 
   FloatType& operator()(int x, int y) {
@@ -23,6 +23,10 @@ class Matrix {
   Matrix operator*(const Matrix& mat) {
     Eigen::MatrixXf m = mat_ * mat.mat_;
     return Matrix(std::move(m));
+  }
+
+  Matrix operator*(const Vec<FloatType>& vec) {
+    assert(mat_.rows() == vec.size());
   }
 
  private:

@@ -7,10 +7,10 @@ TEST(Matrix, Construct) {
 
 TEST(Matrix, Assign) {
   tcalib::Matrix mat(2, 2);
-  ASSERT_FLOAT_EQ(mat(0, 0), 0);
-  ASSERT_FLOAT_EQ(mat(1, 0), 0);
-  ASSERT_FLOAT_EQ(mat(0, 1), 0);
-  ASSERT_FLOAT_EQ(mat(1, 1), 0);
+  ASSERT_FLOAT_EQ(mat(0, 0), 0.F);
+  ASSERT_FLOAT_EQ(mat(1, 0), 0.F);
+  ASSERT_FLOAT_EQ(mat(0, 1), 0.F);
+  ASSERT_FLOAT_EQ(mat(1, 1), 0.F);
   mat(0, 0) = 1.F;
   mat(1, 0) = 2.F;
   mat(0, 1) = 3.F;
