@@ -25,8 +25,20 @@ class Matrix {
     return Matrix(std::move(m));
   }
 
-  Matrix operator*(const Vec<FloatType>& vec) {
-    assert(mat_.rows() == vec.size());
+  Vec<FloatType> operator*(const Vec<FloatType>& vec) {
+    assert(mat_.cols() == vec.size());
+    Eigen::VectorXf v = Eigen::VectorXf::Zero(vec.size());
+    for (auto i = 0; i < vec.size(); i++) {
+      v(i) = vec[i];
+    }
+
+    Eigen::VectorXf v2 = mat_ * v;
+
+    Vec<FloatType> output(mat_.rows());
+    for (auto i = 0; i < mat_.rows(); i++) {
+      output[i] = v2(i);
+    }
+    return output;
   }
 
  private:
