@@ -41,6 +41,9 @@ class Matrix {
     return output;
   }
 
+  std::size_t cols() const { return mat_.cols(); }
+  std::size_t rows() const { return mat_.rows(); }
+
  private:
   Matrix(Eigen::MatrixXf&& mat) : mat_(mat) {}
   Eigen::MatrixXf mat_;

@@ -3,11 +3,14 @@
 #include <vector>
 
 #include "common/constant.h"
+#include "id.h"
 #include "math/vec.h"
 
 namespace tcalib {
 struct Observation {
-  std::vector<Vec<FloatType, 3>> worldPoints;
-  std::set<std::size_t, std::vector<Vec<FloatType, 2>>> cameraObservations;
+  CameraId cameraId;
+  MarkerId markerId;
+  std::vector<Vec<FloatType>> worldPoints;
+  std::vector<Vec<FloatType>> cameraObservations;
 };
 }  // namespace tcalib

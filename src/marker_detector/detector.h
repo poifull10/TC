@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <unordered_map>
 
 #include "../image.h"
 #include "../observation.h"
@@ -11,10 +12,10 @@ class AprilTagDetector {
   class Impl;
 
  public:
-  AprilTagDetector(const std::vector<Marker>& markers);
+  AprilTagDetector(const std::unordered_map<std::size_t, Marker>& markers);
   ~AprilTagDetector();
 
-  Observation operator()(const std::vector<std::shared_ptr<TaggedImage<GrayImage>>>& syncImages);
+  std::vector<Observation> operator()(const std::vector<std::shared_ptr<TaggedImage<GrayImage>>>& syncImages);
 
  private:
   std::unique_ptr<Impl> impl_;

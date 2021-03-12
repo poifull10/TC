@@ -7,6 +7,7 @@ namespace tcalib {
 template <typename T>
 class Vec {
  public:
+  Vec() = default;
   Vec(std::vector<T>& data) : data_(data) {
   }
   Vec(std::size_t size) : data_(size) {
