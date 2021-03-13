@@ -46,3 +46,9 @@ fi
 cmake ../.. -DCMAKE_BUILD_TYPE=$build_type -DCMAKE_C_COMPILER=$c_compiler -DCMAKE_CXX_COMPILER=$cxx_compiler -GNinja
 ninja
 ./tests/TCalibTest
+
+readonly cov_dir=tests/CMakeFiles/TCalibTest.dir
+lcov -d $cov_dir -c -o coverage.info --gcov-tool ../../.ci/llvm-gcov.sh
+lcov --remove coverage.info '/usr/include/*' '*/gtest/*' -o coverageFiltered.info
+genhtml -o lcovHtml --num-spaces 4 -s --legend coverageFiltered.info
+lcov --list coverageFiltered.info
