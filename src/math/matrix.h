@@ -9,14 +9,14 @@
 namespace tcalib {
 class Matrix {
  public:
-  Matrix(std::size_t col, std::size_t row) : mat_(Eigen::MatrixXf::Zero(row, col)) {}
+  Matrix(std::size_t row, std::size_t col) : mat_(Eigen::MatrixXf::Zero(row, col)) {}
   ~Matrix() = default;
 
-  FloatType& operator()(int x, int y) {
+  FloatType& operator()(int y, int x) {
     return mat_(y, x);
   }
 
-  FloatType operator()(int x, int y) const {
+  FloatType operator()(int y, int x) const {
     return mat_(y, x);
   }
 
@@ -27,12 +27,8 @@ class Matrix {
 
   Vec<FloatType> operator*(const Vec<FloatType>& vec) {
     assert(mat_.cols() == vec.size());
-    Eigen::VectorXf v = Eigen::VectorXf::Zero(vec.size());
-    for (auto i = 0; i < vec.size(); i++) {
-      v(i) = vec[i];
-    }
-
-    Eigen::VectorXf v2 = mat_ * v;
+    const Eigen::VectorXf v = Eigen::Map<const Eigen::VectorXf>(vec.data(), vec.size());
+    const Eigen::VectorXf v2 = mat_ * v;
 
     Vec<FloatType> output(mat_.rows());
     for (auto i = 0; i < mat_.rows(); i++) {
@@ -41,8 +37,13 @@ class Matrix {
     return output;
   }
 
-  std::size_t cols() const { return mat_.cols(); }
-  std::size_t rows() const { return mat_.rows(); }
+  size_t cols() const { return mat_.cols(); }
+  size_t rows() const { return mat_.rows(); }
+
+  Matrix transpose() const {
+    Eigen::MatrixXf tmat = mat_.transpose();
+    return Matrix(std::move(tmat));
+  }
 
  private:
   Matrix(Eigen::MatrixXf&& mat) : mat_(mat) {}

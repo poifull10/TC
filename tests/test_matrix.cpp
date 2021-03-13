@@ -2,12 +2,8 @@
 #include <math/matrix.h>
 #include <math/vec.h>
 
-TEST(Matrix, Construct) {
-  tcalib::Matrix mat(10, 10);
-}
-
 TEST(Matrix, Assign) {
-  tcalib::Matrix mat(2, 2);
+  tcalib::Matrix mat(3, 2);
   ASSERT_FLOAT_EQ(mat(0, 0), 0.F);
   ASSERT_FLOAT_EQ(mat(1, 0), 0.F);
   ASSERT_FLOAT_EQ(mat(0, 1), 0.F);
@@ -35,7 +31,11 @@ TEST(Matrix, MultiplyMat) {
   mat2(0, 1) = -30.F;
   mat2(1, 1) = 40.F;
 
-  const auto mat = mat1 * mat2;
+  mat1 = mat1.transpose();
+  mat2 = mat2.transpose();
+
+  auto mat = mat1 * mat2;
+  mat = mat.transpose();
 
   ASSERT_FLOAT_EQ(mat(0, 0), -50.F);
   ASSERT_FLOAT_EQ(mat(1, 0), 100.F);
@@ -50,6 +50,7 @@ TEST(Matrix, MultiplyVec) {
   mat1(1, 0) = 2.F;
   mat1(0, 1) = 3.F;
   mat1(1, 1) = 4.F;
+  mat1 = mat1.transpose();
 
   const auto vec = mat1 * vec1;
 
