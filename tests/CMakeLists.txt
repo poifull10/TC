@@ -1,8 +1,6 @@
 add_executable(
   TCalibTest
   main.cpp
-  test_vec.cpp
-  test_matrix.cpp
   test_pose.cpp
   test_pinhole.cpp
   test_image.cpp
