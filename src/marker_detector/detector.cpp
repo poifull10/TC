@@ -25,11 +25,11 @@ class AprilTagDetector::Impl {
         const auto marker = markers_.at(markerIdInt);
         observation.markerId = marker.id;
         observation.cameraId = imagePtr->cameraId;
-        for (auto imagePoint : markerCorners[markerIdInt]) {
-          observation.cameraObservations.emplace_back(Vec<FloatType>{imagePoint.x, imagePoint.y});
+        for (const auto& imagePoint : markerCorners[markerIdInt]) {
+          observation.cameraObservations.emplace_back(imagePoint.x, imagePoint.y);
         }
         for (auto objectPoint : markers_.at(marker.id()).worldPoints) {
-          observation.worldPoints.emplace_back(objectPoint);
+          observation.worldPoints.emplace_back(std::move(objectPoint));
         }
       }
       if (!observation.cameraObservations.empty()) {
@@ -39,10 +39,10 @@ class AprilTagDetector::Impl {
     return observations;
   }
 
-  std::unordered_map<std::size_t, Marker> markers_;
+  std::unordered_map<size_t, Marker> markers_;
 };
 
-AprilTagDetector::AprilTagDetector(const std::unordered_map<std::size_t, Marker>& markers) : impl_{std::make_unique<Impl>(markers)} {
+AprilTagDetector::AprilTagDetector(const std::unordered_map<size_t, Marker>& markers) : impl_{std::make_unique<Impl>(markers)} {
 }
 
 AprilTagDetector::~AprilTagDetector() {

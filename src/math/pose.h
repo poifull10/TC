@@ -1,54 +1,46 @@
 #pragma once
+#include <Eigen/Core>
 #include <Eigen/Geometry>
-
-#include "matrix.h"
-#include "vec.h"
 
 namespace tcalib {
 
 class Pose {
  public:
-  Pose(const Vec<FloatType>& translation, const Vec<FloatType>& quaternion) : translation_(translation), quaternion_(quaternion) {
-    assert(translation_.size() == 3);
-    assert(quaternion_.size() == 4);
+  Pose(const Eigen::Vector3f& translation, const Eigen::Quaternionf& quaternion) : translation_(translation), quaternion_(quaternion) {
   }
 
-  Pose(const Matrix& mat) {
-    assert(mat.cols() == 4);
-    assert(mat.rows() == 4);
-    Eigen::Matrix<FloatType, 3, 3> R = Eigen::Matrix<FloatType, 3, 3>::Zero();
+  Pose(const Eigen::Matrix4f& mat) {
+    Eigen::Matrix3f R = Eigen::Matrix3f::Zero();
     for (auto h = 0; h < 3; h++) {
       for (auto w = 0; w < 3; w++) {
-        R(h, w) = mat(w, h);
+        R(h, w) = mat(h, w);
       }
     }
     Eigen::Quaternionf q(R);
-    Vec<FloatType> translation{mat(3, 0), mat(3, 1), mat(3, 2)};
-    Vec<FloatType> quaternion{q.x(), q.y(), q.z(), q.w()};
-    translation_ = translation;
-    quaternion_ = quaternion;
+    Eigen::Vector3f translation{mat(0, 3), mat(1, 3), mat(2, 3)};
+    translation_ = std::move(translation);
+    quaternion_ = std::move(q);
   }
 
-  FloatType tx() const { return translation_[0]; }
-  FloatType ty() const { return translation_[1]; }
-  FloatType tz() const { return translation_[2]; }
-  FloatType rx() const { return quaternion_[0]; }
-  FloatType ry() const { return quaternion_[1]; }
-  FloatType rz() const { return quaternion_[2]; }
-  FloatType rw() const { return quaternion_[3]; }
+  float tx() const { return translation_.x(); }
+  float ty() const { return translation_.y(); }
+  float tz() const { return translation_.z(); }
+  float rx() const { return quaternion_.x(); }
+  float ry() const { return quaternion_.y(); }
+  float rz() const { return quaternion_.z(); }
+  float rw() const { return quaternion_.w(); }
 
-  Matrix matrix() const {
-    Eigen::Matrix3f R(Eigen::Quaternionf(rw(), rx(), ry(), rz()));
-    Matrix mat(4, 4);
+  Eigen::Matrix4f matrix() const {
+    Eigen::Matrix3f R(quaternion_);
+    Eigen::Matrix4f mat = Eigen::Matrix4f::Identity();
     for (auto h = 0; h < 3; h++) {
       for (auto w = 0; w < 3; w++) {
-        mat(w, h) = R(h, w);
+        mat(h, w) = R(h, w);
       }
     }
     mat(0, 3) = tx();
     mat(1, 3) = ty();
     mat(2, 3) = tz();
-    mat(3, 3) = 1;
     return mat;
   }
 
@@ -58,8 +50,8 @@ class Pose {
   }
 
  private:
-  Vec<FloatType> translation_;
-  Vec<FloatType> quaternion_;
+  Eigen::Vector3f translation_;
+  Eigen::Quaternionf quaternion_;
 };
 
 }  // namespace tcalib

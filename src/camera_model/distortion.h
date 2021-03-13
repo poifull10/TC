@@ -1,13 +1,12 @@
 #pragma once
-#include "../common/constant.h"
-#include "../math/vec.h"
+#include <Eigen/Core>
 
 namespace tcalib::distortion {
 struct None {
-  Vec<FloatType> distort(const Vec<FloatType>& uv) const {
+  Eigen::Vector2f distort(const Eigen::Vector2f& uv) const {
     return uv;
   }
-  Vec<FloatType> undistort(const Vec<FloatType>& m) const {
+  Eigen::Vector2f undistort(const Eigen::Vector2f& m) const {
     return m;
   }
 };

@@ -1,16 +1,15 @@
 #pragma once
+#include <Eigen/Core>
 #include <set>
 #include <vector>
 
-#include "common/constant.h"
 #include "id.h"
-#include "math/vec.h"
 
 namespace tcalib {
 struct Observation {
   CameraId cameraId;
   MarkerId markerId;
-  std::vector<Vec<FloatType>> worldPoints;
-  std::vector<Vec<FloatType>> cameraObservations;
+  std::vector<Eigen::Vector3f> worldPoints;
+  std::vector<Eigen::Vector2f> cameraObservations;
 };
 }  // namespace tcalib

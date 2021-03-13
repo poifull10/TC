@@ -2,23 +2,23 @@
 #include <math/pose.h>
 
 TEST(Pose, Construct) {
-  tcalib::Pose pose({0, 0, 0}, {0, 0, 0, 1});
+  tcalib::Pose pose({0, 0, 0}, {1, 0, 0, 0});
 }
 
 TEST(Pose, Multiply) {
-  tcalib::Matrix mat(4, 4);
+  Eigen::Matrix4f mat = Eigen::Matrix4f::Zero();
   mat(0, 0) = -0.5610206F;
-  mat(1, 0) = -0.7184630F;
-  mat(2, 0) = -0.4111774F;
-  mat(0, 1) = 0.4111774F;
+  mat(0, 1) = -0.7184630F;
+  mat(0, 2) = -0.4111774F;
+  mat(1, 0) = 0.4111774F;
   mat(1, 1) = -0.6729603F;
-  mat(2, 1) = 0.6148639F;
-  mat(0, 2) = -0.7184630F;
-  mat(1, 2) = 0.1758844F;
+  mat(1, 2) = 0.6148639F;
+  mat(2, 0) = -0.7184630F;
+  mat(2, 1) = 0.1758844F;
   mat(2, 2) = 0.6729603F;
-  mat(3, 0) = 10.0F;
-  mat(3, 1) = 11.0F;
-  mat(3, 2) = 12.0F;
+  mat(0, 3) = 10.0F;
+  mat(1, 3) = 11.0F;
+  mat(2, 3) = 12.0F;
 
   tcalib::Pose pose(mat);
 

@@ -1,15 +1,14 @@
 #pragma once
+#include <Eigen/Core>
 #include <cctype>
+#include <vector>
 
-#include "../common/constant.h"
 #include "../id.h"
-#include "../math/vec.h"
-
 namespace tcalib {
 struct Marker {
   float size;
   MarkerId id;
-  std::vector<Vec<FloatType>> worldPoints;
+  std::vector<Eigen::Vector3f> worldPoints;
 };
 
 }  // namespace tcalib
