@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include <image.h>
 
-TEST(GrayImage, Construct) {
+#include <cstdlib>
+
+TEST(GrayImage, WidthHeight) {
   tcalib::GrayImage image(9, 11);
 
   ASSERT_EQ(image.width(), 9);
@@ -10,6 +12,6 @@ TEST(GrayImage, Construct) {
 
 TEST(GrayImage, Assign) {
   tcalib::GrayImage image(9, 11);
-  image(1, 1, 3);
-  ASSERT_EQ(image(1, 1), 3);
+  image(1, 4, 3);
+  ASSERT_EQ(image(1, 4), 3);
 }
