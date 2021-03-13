@@ -57,7 +57,7 @@ FROM base AS standard
 
 FROM standard AS ci
   RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    clang-format llvm clang clang-tidy \
+    clang-format llvm clang clang-tidy lcov \
     && rm -rf /var/lib/apt/lists/*
   RUN mkdir -p /build \
     && cd /build \
