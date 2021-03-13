@@ -1,20 +1,28 @@
 #pragma once
 #include <array>
 #include <initializer_list>
+#include <vector>
 namespace tcalib {
 
-template <typename T, int N>
-struct Vec {
-  std::array<T, N> data;
-  Vec(std::array<T, N>& data) : data(data) {
+template <typename T>
+class Vec {
+ public:
+  Vec() = default;
+  Vec(std::vector<T>& data) : data_(data) {
+  }
+  Vec(std::size_t size) : data_(size) {
   }
   Vec(std::initializer_list<T> init) {
-    int cnt = 0;
     for (const auto& e : init) {
-      data[cnt++] = e;
+      data_.emplace_back(e);
     }
   }
-  T& operator[](std::size_t i) { return data[i]; }
-  T operator[](std::size_t i) const { return data[i]; }
+
+  std::size_t size() const { return data_.size(); }
+  T& operator[](std::size_t i) { return data_[i]; }
+  T operator[](std::size_t i) const { return data_[i]; }
+
+ private:
+  std::vector<T> data_;
 };
 }  // namespace tcalib

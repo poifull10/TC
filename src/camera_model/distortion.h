@@ -4,10 +4,10 @@
 
 namespace tcalib::distortion {
 struct None {
-  Vec<FloatType, 2> distort(const Vec<FloatType, 2>& uv) const {
+  Vec<FloatType> distort(const Vec<FloatType>& uv) const {
     return uv;
   }
-  Vec<FloatType, 2> undistort(const Vec<FloatType, 2>& m) const {
+  Vec<FloatType> undistort(const Vec<FloatType>& m) const {
     return m;
   }
 };

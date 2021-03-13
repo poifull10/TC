@@ -7,7 +7,7 @@ TEST(Pinhole, None) {
       tcalib::PinholeIntrinsic{10, 10, 10, 10, 20, 20},
       tcalib::distortion::None{});
 
-  std::array<float, 3> ans_xyz{30.1F, -17.3F, 9.1F};
+  std::vector<float> ans_xyz{30.1F, -17.3F, 9.1F};
   const auto uv = pinholeNone.project(ans_xyz);
   const auto xyz = pinholeNone.unproject(uv);
 

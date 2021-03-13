@@ -27,7 +27,7 @@ class Pinhole {
     assert(intrinsic_.cy < intrinsic_.height);
   }
 
-  Vec<FloatType, 2> project(const Vec<FloatType, 3>& objectPoint) const {
+  Vec<FloatType> project(const Vec<FloatType>& objectPoint) const {
     const auto x = objectPoint[0] / objectPoint[2];
     const auto y = objectPoint[1] / objectPoint[2];
     const auto mVec = distortionModel_.distort({x, y});
@@ -37,7 +37,7 @@ class Pinhole {
     };
   }
 
-  Vec<FloatType, 3> unproject(const Vec<FloatType, 2>& imagePoint) const {
+  Vec<FloatType> unproject(const Vec<FloatType>& imagePoint) const {
     const auto mx = (imagePoint[0] - intrinsic_.cx) / intrinsic_.fx;
     const auto my = (imagePoint[1] - intrinsic_.cy) / intrinsic_.fy;
     const auto xy = distortionModel_.undistort({mx, my});
